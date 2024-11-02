@@ -7,11 +7,11 @@
         <style>
     body {
         font-family: Arial, sans-serif;
-        display: flex; /* Flexbox aktivieren */
-        flex-direction: column; /* Elemente in einer Spalte anordnen */
-        justify-content: center; /* Vertikale Zentrierung */
-        align-items: center; /* Horizontale Zentrierung */
-        height: 100vh; /* Volle Höhe des Viewports */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
         margin: 0;
     }
     .statement { margin: 20px; font-size: 24px; text-align: center; } /* Text zentrieren */
@@ -47,7 +47,7 @@
 
         // Gewichtungen für jede Kantate
         const kantaten = {
-            "BWV 140": [1, 2, 1, 1, 3, 1, 2, 1], // Beispielgewichtungen
+            "Wie schön leuchtet der Morgenstern BWV 1 (Leipzig 1725)": [1, 1, 1, 1, 1, 1, 1, 1],
             "BWV 21": [3, 1, 2, 1, 1, 2, 1, 2],
             "BWV 147": [1, 1, 1, 1, 1, 1, 1, 2]
         };
@@ -73,7 +73,7 @@
 
         function showResult() {
             let result = determineResult();
-            document.getElementById("question").textContent = `Vielen Dank für deine Antworten! Am besten passt zu dir die Bach-Kantate: ${result}`;
+            document.getElementById("question").textContent = `Am besten passt zu dir die Bach-Kantate ... ${result}`;
             document.querySelectorAll("button").forEach(btn => btn.style.display = "none");
         }
 
