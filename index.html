@@ -2,20 +2,49 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Bach-Kantaten-Quiz</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bach Kantaten Quiz</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .statement { margin: 20px; font-size: 24px; }
+        .button { margin: 5px; padding: 10px; font-size: 18px; }
+    </style>
 </head>
 <body>
-    <div id="quiz-container">
-        <h1>Finde deine Bach-Kantate!</h1>
-        <p id="frage-text">Lade Frage...</p>
-        <div id="buttons">
-            <button onclick="antwortGeben('Ja')">Ja</button>
-            <button onclick="antwortGeben('Nein')">Nein</button>
-            <button onclick="antwortGeben('Weiß nicht')">Weiß nicht</button>
-        </div>
-    </div>
-    <script src="questions.js"></script>
-    <script src="quiz.js"></script>
+    <div class="statement" id="question"></div>
+    <button class="button" onclick="answer('Ja')">Ja</button>
+    <button class="button" onclick="answer('Nein')">Nein</button>
+    <button class="button" onclick="answer('Weiß nicht')">Weiß nicht</button>
+
+    <script>
+        const statements = [
+            "Ich bin fast immer gut gelaunt.",
+            "Ich mag es, mich manchmal in herbstliche Traurigkeit reinzusteigern.",
+            "Kunst ohne Tiere ist keine wahre Kunst!",
+            "Von mir aus darf es ruhig mal krachen!",
+            "Man sagt mir nach, ich sei ein bisschen pomöös.",
+            "Ich erinnere mich gerne an den Musikunterricht in der Grundschule.",
+            "Ich bin immer im hier und jetzt und träume mich nie irgendwo anders hin.",
+            "Ich bin durchaus ein geduldiger Mensch."
+        ];
+        let currentQuestion = 0;
+
+        function displayQuestion() {
+            document.getElementById("question").textContent = statements[currentQuestion];
+        }
+
+        function answer(response) {
+            console.log(`Antwort auf Frage ${currentQuestion + 1}: ${response}`);
+            currentQuestion++;
+            if (currentQuestion < statements.length) {
+                displayQuestion();
+            } else {
+                document.getElementById("question").textContent = "Vielen Dank für deine Antworten!";
+                document.querySelectorAll("button").forEach(btn => btn.style.display = "none");
+            }
+        }
+
+        displayQuestion();
+    </script>
 </body>
 </html>
