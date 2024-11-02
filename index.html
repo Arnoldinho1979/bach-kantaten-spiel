@@ -4,11 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bach Kantaten Quiz</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .statement { margin: 20px; font-size: 24px; }
-        .button { margin: 5px; padding: 10px; font-size: 18px; }
-    </style>
+        <style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex; /* Flexbox aktivieren */
+        flex-direction: column; /* Elemente in einer Spalte anordnen */
+        justify-content: center; /* Vertikale Zentrierung */
+        align-items: center; /* Horizontale Zentrierung */
+        height: 100vh; /* Volle Höhe des Viewports */
+        margin: 0; /* Standardmargin entfernen */
+    }
+    .statement { margin: 20px; font-size: 24px; text-align: center; } /* Text zentrieren */
+    .button { margin: 5px; padding: 10px; font-size: 18px; }
+</style>
 </head>
 <body>
     <div class="statement" id="question"></div>
