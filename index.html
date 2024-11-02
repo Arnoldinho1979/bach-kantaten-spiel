@@ -2,10 +2,20 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Bach Kantaten Quiz</title>
+    <title>Bach-Kantaten-Quiz</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Willkommen beim Bach-Kantaten-Quiz!</h1>
-    <p>Diese Seite ist ein Test für GitHub Pages.</p>
+    <div id="quiz-container">
+        <h1>Finde deine Bach-Kantate!</h1>
+        <p id="frage-text">Lade Frage...</p>
+        <div id="buttons">
+            <button onclick="antwortGeben('Ja')">Ja</button>
+            <button onclick="antwortGeben('Nein')">Nein</button>
+            <button onclick="antwortGeben('Weiß nicht')">Weiß nicht</button>
+        </div>
+    </div>
+    <script src="questions.js"></script>
+    <script src="quiz.js"></script>
 </body>
 </html>
