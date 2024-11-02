@@ -12,9 +12,9 @@
 </head>
 <body>
     <div class="statement" id="question"></div>
-    <button class="button" onclick="answer('Ja')">Ja</button>
-    <button class="button" onclick="answer('Nein')">Nein</button>
-    <button class="button" onclick="answer('Weiß nicht')">Weiß nicht</button>
+    <button class="button" onclick="answer(1)">Ja</button>
+    <button class="button" onclick="answer(2)">Nein</button>
+    <button class="button" onclick="answer(3)">Weiß nicht</button>
 
     <script>
         const statements = [
@@ -27,21 +27,62 @@
             "Ich bin immer im hier und jetzt und träume mich nie irgendwo anders hin.",
             "Ich bin durchaus ein geduldiger Mensch."
         ];
+
+        // Gewichtungen für jede Kantate
+        const kantaten = {
+            "BWV 140": [1, 2, 1, 1, 3, 1, 2, 1], // Beispielgewichtungen
+            "BWV 21": [3, 1, 2, 1, 1, 2, 1, 2],
+            "BWV 147": [1, 1, 1, 1, 1, 1, 1, 2]
+        };
+
         let currentQuestion = 0;
+        let userResponses = [];
 
         function displayQuestion() {
             document.getElementById("question").textContent = statements[currentQuestion];
         }
 
         function answer(response) {
-            console.log(`Antwort auf Frage ${currentQuestion + 1}: ${response}`);
+            userResponses.push(response); // Antwort speichern
+
             currentQuestion++;
+
             if (currentQuestion < statements.length) {
                 displayQuestion();
             } else {
-                document.getElementById("question").textContent = "Vielen Dank für deine Antworten!";
-                document.querySelectorAll("button").forEach(btn => btn.style.display = "none");
+                showResult();
             }
+        }
+
+        function showResult() {
+            let result = determineResult();
+            document.getElementById("question").textContent = `Vielen Dank für deine Antworten! Am besten passt zu dir die Bach-Kantate: ${result}`;
+            document.querySelectorAll("button").forEach(btn => btn.style.display = "none");
+        }
+
+        function determineResult() {
+            let bestKantate = null;
+            let bestScore = -1;
+
+            // Vergleich der Benutzerantworten mit den Kantaten-Gewichtungen
+            for (let kantate in kantaten) {
+                const scores = kantaten[kantate];
+                let score = 0;
+
+                // Vergleiche die Benutzerantworten mit der Gewichtung der Kantate
+                for (let i = 0; i < userResponses.length; i++) {
+                    if (userResponses[i] === scores[i]) {
+                        score++;
+                    }
+                }
+
+                // Suche die Kantate mit der höchsten Punktzahl
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestKantate = kantate;
+                }
+            }
+            return bestKantate;
         }
 
         displayQuestion();
