@@ -14,20 +14,21 @@
         height: 100vh;
         margin: 0;
     }
-    .statement { margin: 20px; font-size: 24px; text-align: center; } /* Text zentrieren */
+    .statement { margin: 20px; font-size: 24px; text-align: center; }
     .button {
     margin: 5px; 
     padding: 10px; 
     font-size: 18px; 
-    display: inline-block; /* Ändere auf inline-block */
+    display: inline-block;
 }
 
 </style>
 </head>
 <body>
-<h1 style="text-align: center;">Kantat-O-Mat</h1>
-<h2 style="text-align: center;">Welche Bach-Kantate passt zu dir?</h2>
 <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Bachfest_Logo.svg" alt="Logo" style="width: 150px; height: auto; margin-bottom: 20px;">
+<h1 style="text-align: center; font-size: 3em;">Kantat-O-Mat</h1>
+<h2 style="text-align: center;">Welche Bach-Kantate passt zu dir?</h2>
+
 <div class="statement" id="question"></div>
 <div class="button-container">
     <button class="button" onclick="answer(1)">Ja</button>
