@@ -26,7 +26,7 @@
 </head>
 <body>
 <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Bachfest_Logo.svg" alt="Logo" style="width: 600px; height: auto; margin-bottom: 20px;">
-<h1 style="text-align: center; font-size: 3em; margin-bottom: 2px;">Kantat-O-Mat</h1>
+<h1 style="text-align: center; font-size: 3em;">Kantat-O-Mat</h1>
 <h2 style="text-align: center; margin-bottom: 30px;">Welche Bach-Kantate passt zu dir?</h2>
 
 <div class="statement" id="question"></div>
@@ -76,25 +76,34 @@
         }
 
         function showResult() {
-    let result = determineResult();
-    let videoUrl = getVideoUrl(result); // Funktion um die URL für das Video zu holen
-    document.getElementById("question").innerHTML = `
-        Vielen Dank für deine Antworten! Am besten passt zu dir die Bach-Kantate: ${result}
-        <iframe width="560" height="315" src="${videoUrl}" frameborder="0" allowfullscreen></iframe>
-    `;
-    document.querySelectorAll("button").forEach(btn => btn.style.display = "none");
-}
+            let result = determineResult();
+            document.getElementById("question").textContent = `Am besten passt zu dir die Bach-Kantate ... ${result}`;
+            document.querySelectorAll("button").forEach(btn => btn.style.display = "none");
+        }
 
-// Beispiel Funktion um die Video URL zu bekommen
-function getVideoUrl(kantate) {
-    const videoUrls = {
-        "Wie schön leuchtet der Morgenstern BWV 1 (Leipzig 1725)": "https://youtu.be/7fNaMOtVUc4?si=FkOsvaGVETw2y8oI",
-        "BWV 21": "https://www.youtube.com/embed/YOUR_VIDEO_ID2",
-        "BWV 147": "https://www.youtube.com/embed/YOUR_VIDEO_ID3"
-    };
-    return videoUrls[kantate];
-}
+        function determineResult() {
+            let bestKantate = null;
+            let bestScore = -1;
 
+            // Vergleich der Benutzerantworten mit den Kantaten-Gewichtungen
+            for (let kantate in kantaten) {
+                const scores = kantaten[kantate];
+                let score = 0;
+
+                // Vergleiche die Benutzerantworten mit der Gewichtung der Kantate
+                for (let i = 0; i < userResponses.length; i++) {
+                    if (userResponses[i] === scores[i]) {
+                        score++;
+                    }
+                }
+
+                // Suche die Kantate mit der höchsten Punktzahl
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestKantate = kantate;
+                }
+            }
+            return bestKantate;
         }
 
         displayQuestion();
