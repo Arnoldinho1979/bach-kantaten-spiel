@@ -4,25 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kantat-O-Mat</title>
-        <style>
-    body {
-        font-family: Times New Roman;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
-    .statement { margin: 20px; font-size: 24px; text-align: center; }
-    .button {
-    margin: 5px; 
-    padding: 10px; 
-    font-size: 18px; 
-    display: inline-block;
-}
-
-</style>
+    <style>
+        body {
+            font-family: "Times New Roman", serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .statement { margin: 20px; font-size: 24px; text-align: center; }
+        .button {
+            margin: 5px; 
+            padding: 10px; 
+            font-size: 18px; 
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
 <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Bachfest_Logo.svg" alt="Logo" style="width: 400px; height: auto; margin-top: 10px; margin-bottom: 20px;">
@@ -35,81 +34,88 @@
     <button class="button" onclick="answer(2)">Nein</button>
     <button class="button" onclick="answer(3)">Weiß nicht</button>
 </div>
-</body>
 
-    <script>
-        const statements = [
-            "1. Wie liebe ich es, mich an die Abende zu erinnern, an denen wir Kinder mit den Eltern gemeinsam »Wetten, dass..?« geschaut haben!",
-            "2. Bei hohen Geräuschen bekomme ich umgehend einen Hörsturz.",
-            "3. Ausgepustete Eier und morgens um 4.30 Uhr raus: Ich liebe es!",
-            "4. Ich feiere gerne und oft – und dabei darf es ruhig einmal krachen!",
-            "5. Gerne denke ich an den Musikunterricht in meiner Grundschulzeit zurück.",
-            "6. Ich mag es, mich manchmal in meine Traurigkeit fallenzulassen.",
-            "7. Bevor ich in einem Restaurant esse, schau ich mir die Google-Bewertungen an.",
-            "8. Ich zähle mich zu den geduldigsten Menschen der Welt.",
-            "9. »Die Ratten der Lüfte«, das missachtete Tierwohl bei Hochzeiten mit diesen gurrenden Dingern, egal! Ich finde Tauben total super!",
-            "10. Zumindest so ein bisschen spirituell sind wir doch alle, oder? Ich jedenfalls!"
-        ];
+<script>
+    const statements = [
+        "1. Wie liebe ich es, mich an die Abende zu erinnern, an denen wir Kinder mit den Eltern gemeinsam »Wetten, dass..?« geschaut haben!",
+        "2. Bei hohen Geräuschen bekomme ich umgehend einen Hörsturz.",
+        "3. Ausgepustete Eier und morgens um 4.30 Uhr raus: Ich liebe es!",
+        "4. Ich feiere gerne und oft – und dabei darf es ruhig einmal krachen!",
+        "5. Gerne denke ich an den Musikunterricht in meiner Grundschulzeit zurück.",
+        "6. Ich mag es, mich manchmal in meine Traurigkeit fallenzulassen.",
+        "7. Bevor ich in einem Restaurant esse, schau ich mir die Google-Bewertungen an.",
+        "8. Ich zähle mich zu den geduldigsten Menschen der Welt.",
+        "9. »Die Ratten der Lüfte«, das missachtete Tierwohl bei Hochzeiten mit diesen gurrenden Dingern, egal! Ich finde Tauben total super!",
+        "10. Zumindest so ein bisschen spirituell sind wir doch alle, oder? Ich jedenfalls!"
+    ];
 
-        // Gewichtungen für jede Kantate
-       const kantaten = {
-    "Wie schön leuchtet der Morgenstern<br>BWV 1 (Leipzig 1725)": [3, 2, 3, 2, 2, 2, 1, 2, 2, 1],
-    "Ach Gott, vom Himmel sieh darein BWV 2<br>(Leipzig 1724)": [3, 1, 2, 2, 2, 1, 2, 2, 3, 1],
-    "BWV 147": [1, 1, 1, 1, 1, 1, 1, 2]
-};
-
-
-        let currentQuestion = 0;
-        let userResponses = [];
-
-        function displayQuestion() {
-            document.getElementById("question").textContent = statements[currentQuestion];
+    const kantaten = {
+        "Wie schön leuchtet der Morgenstern<br>BWV 1 (Leipzig 1725)": {
+            scores: [3, 2, 3, 2, 2, 2, 1, 2, 2, 1],
+            videoUrl: "https://www.youtube.com/embed/exampleURL1"
+        },
+        "Ach Gott, vom Himmel sieh darein BWV 2<br>(Leipzig 1724)": {
+            scores: [3, 1, 2, 2, 2, 1, 2, 2, 3, 1],
+            videoUrl: "https://www.youtube.com/embed/exampleURL2"
+        },
+        "BWV 147": {
+            scores: [1, 1, 1, 1, 1, 1, 1, 2],
+            videoUrl: "https://www.youtube.com/embed/exampleURL3"
         }
+    };
 
-        function answer(response) {
-            userResponses.push(response); // Antwort speichern
+    let currentQuestion = 0;
+    let userResponses = [];
 
-            currentQuestion++;
+    function displayQuestion() {
+        document.getElementById("question").textContent = statements[currentQuestion];
+    }
 
-            if (currentQuestion < statements.length) {
-                displayQuestion();
-            } else {
-                showResult();
+    function answer(response) {
+        userResponses.push(response);
+        currentQuestion++;
+        
+        if (currentQuestion < statements.length) {
+            displayQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        let result = determineResult();
+        document.getElementById("question").innerHTML = `
+            Am besten passt zu dir die Bach-Kantate ...<br><br>${result.kantate}<br><br>
+            <iframe width="560" height="315" src="${result.videoUrl}" frameborder="0" allowfullscreen></iframe>
+        `;
+        document.querySelectorAll("button").forEach(btn => btn.style.display = "none");
+    }
+
+    function determineResult() {
+        let bestKantate = null;
+        let bestScore = -1;
+
+        for (let kantate in kantaten) {
+            const { scores } = kantaten[kantate];
+            let score = 0;
+
+            let minLength = Math.min(userResponses.length, scores.length);
+            for (let i = 0; i < minLength; i++) {
+                if (userResponses[i] === scores[i]) {
+                    score++;
+                }
+            }
+
+            if (score > bestScore) {
+                bestScore = score;
+                bestKantate = kantate;
             }
         }
+        
+        return { kantate: bestKantate, videoUrl: kantaten[bestKantate].videoUrl };
+    }
 
-       function showResult() {
-    let result = determineResult();
-    document.getElementById("question").innerHTML = `Am besten passt zu dir die Bach-Kantate ...<br><br>${result}<br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/7fNaMOtVUc4" frameborder="0" allowfullscreen></iframe>`;
-    document.querySelectorAll("button").forEach(btn => btn.style.display = "none");
-
-        }
-
-        function determineResult() {
-            let bestKantate = null;
-            let bestScore = -1;
-
-            // Vergleich der Benutzerantworten mit den Kantaten-Gewichtungen
-            for (let kantate in kantaten) {
-                const scores = kantaten[kantate];
-                let score = 0;
-
-                // Vergleiche die Benutzerantworten mit der Gewichtung der Kantate
-                for (let i = 0; i < userResponses.length; i++) {
-                    if (userResponses[i] === scores[i]) {
-                        score++;
-                    }
-                }
-
-                // Suche die Kantate mit der höchsten Punktzahl
-                if (score > bestScore) {
-                    bestScore = score;
-                    bestKantate = kantate;
-                }
-            }
-            return bestKantate;
-        }
-   displayQuestion();
-    </script>
+    displayQuestion();
+</script>
 </body>
 </html>
