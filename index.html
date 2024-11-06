@@ -59,7 +59,7 @@
             videoUrl: "https://www.youtube.com/embed/exampleURL2"
         },
         "BWV 147": {
-            scores: [1, 1, 1, 1, 1, 1, 1, 2],
+            scores: [1, 1, 1, 1, 1, 1, 1, 2, 3, 2],
             videoUrl: "https://www.youtube.com/embed/exampleURL3"
         }
     };
@@ -111,7 +111,12 @@
                 bestKantate = kantate;
             }
         }
-        
+
+        // Fallback: Wenn keine exakte Übereinstimmung vorhanden ist, gebe das beste ähnliche Ergebnis zurück
+        if (bestScore === 0) {
+            return { kantate: "BWV 147", videoUrl: kantaten["BWV 147"].videoUrl }; // Beispiel für Standard-Ersatzkantate
+        }
+
         return { kantate: bestKantate, videoUrl: kantaten[bestKantate].videoUrl };
     }
 
