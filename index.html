@@ -520,26 +520,16 @@
         } else {
             showResult();
         }
-   function showResult() {
-    let result = determineResult();
-    document.getElementById("question").innerHTML = `
-        Am besten passt zu dir die Bach-Kantate ...<br><br>${result.kantate}<br><br>
-        <iframe width="560" height="315" src="${result.videoUrl}" frameborder="0" allowfullscreen></iframe>
-    `;
-    document.querySelectorAll("button").forEach(btn => btn.style.display = "none");
+    }
 
-    selectedKantate = result.kantate; // Speichert die ausgewählte Kantate für das Teilen
-
-    document.getElementById("question").insertAdjacentHTML("afterend", `
-        <div class="social-buttons" style="margin-top: 20px;">
-            <button class="social-button" onclick="shareOnSocialMedia('facebook')">Teilen auf Facebook</button>
-            <button class="social-button" onclick="shareOnSocialMedia('threads')">Teilen auf Threads</button>
-            <button class="social-button" onclick="shareOnSocialMedia('bluesky')">Teilen auf Bluesky</button>
-            <button class="social-button" onclick="shareOnSocialMedia('mastodon')">Teilen auf Mastodon</button>
-        </div>
-    `);
-}
-
+    function showResult() {
+        let result = determineResult();
+        document.getElementById("question").innerHTML = `
+            Am besten passt zu dir die Bach-Kantate ...<br><br>${result.kantate}<br><br>
+            <iframe width="560" height="315" src="${result.videoUrl}" frameborder="0" allowfullscreen></iframe>
+        `;
+        document.querySelectorAll("button").forEach(btn => btn.style.display = "none");
+    }
 
     function determineResult() {
         let bestKantate = null;
