@@ -33,6 +33,18 @@
     <button class="button" onclick="answer(1)">Ja</button>
     <button class="button" onclick="answer(2)">Nein</button>
     <button class="button" onclick="answer(3)">Weiß nicht</button>
+    
+    selectedKantate = result.kantate; // Speichert die ausgewählte Kantate für das Teilen
+
+document.getElementById("question").insertAdjacentHTML("afterend", `
+    <div class="social-buttons">
+        <button class="social-button" onclick="shareOnSocialMedia('facebook')">Teilen auf Facebook</button>
+        <button class="social-button" onclick="shareOnSocialMedia('threads')">Teilen auf Threads</button>
+        <button class="social-button" onclick="shareOnSocialMedia('bluesky')">Teilen auf Bluesky</button>
+        <button class="social-button" onclick="shareOnSocialMedia('mastodon')">Teilen auf Mastodon</button>
+    </div>
+`);
+
 </div>
 
 <script>
@@ -561,6 +573,32 @@
     }
 
     displayQuestion();
+
+function shareOnSocialMedia(platform) {
+    const title = `Am besten passt zu dir die Bach-Kantate: ${selectedKantate}`;
+    const url = "https://arnoldinho1979.github.io/bach-kantaten-spiel/";
+    const shareText = `${title} ${url}`;
+    
+    // In die Zwischenablage kopieren
+    navigator.clipboard.writeText(shareText).then(() => {
+        alert("Der Kantatentitel und der Link wurden in die Zwischenablage kopiert!");
+    });
+
+    let shareUrl = "";
+    if (platform === 'facebook') {
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(title)}`;
+    } else if (platform === 'threads') {
+        shareUrl = `https://www.threads.net/share?text=${encodeURIComponent(shareText)}`;
+    } else if (platform === 'bluesky') {
+        shareUrl = `https://bsky.app/?text=${encodeURIComponent(shareText)}`;
+    } else if (platform === 'mastodon') {
+        shareUrl = `https://mastodon.social/share?text=${encodeURIComponent(shareText)}`;
+    }
+
+    window.open(shareUrl, '_blank');
+}
+
+    
 </script>
 </body>
 </html>
